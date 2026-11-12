@@ -1,0 +1,29 @@
+step,affected,detail
+standardize_columns,0,
+strip_whitespace,1688,
+placeholders_to_NaN,933,
+parse_dates[order_date],5210,unparseable=0
+parse_dates[ship_date],5210,unparseable=0
+parse_dates[delivery_date],5055,unparseable=0
+resolve_ambiguous_dates,578,rows_with_slash_dates=2863
+parse_weight[weight_kg],4950,lb->kg converted=751
+parse_currency[freight_cost_inr],5000,
+to_numeric[distance_km],5056,
+normalize_categories[origin_city],28,"unique 38->10, fuzzy=92, unmapped=0"
+normalize_categories[destination_city],23,"unique 33->10, fuzzy=98, unmapped=0"
+normalize_categories[carrier],18,"unique 22->4, fuzzy=425, unmapped=0"
+normalize_categories[status],9,"unique 13->4, fuzzy=437, unmapped=0"
+remove_duplicates,210,exact_dupes_before_key_dedupe=210
+non_positive[weight_kg] -> NaN,24,
+non_positive[distance_km] -> NaN,0,
+non_positive[freight_cost_inr] -> NaN,0,
+ship_before_order -> NaT,5,
+delivery_before_ship -> NaT,60,
+outliers[freight_cost_inr] -> NaN,20,"log-IQR k=3.0, upper~70,710"
+outliers[weight_kg] -> NaN,7,"log-IQR k=3.0, upper~2,537"
+recompute_distance,150,haversine x1.25 from city coordinates
+impute_median[weight_kg],281,by ['vehicle_type']
+impute_median[freight_cost_inr],220,by ['route']
+fill_unknown[carrier],50,
+fill_unknown[vehicle_type],100,
+"derived[transit_days,cost_per_km]",5000,

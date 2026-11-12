@@ -1,0 +1,124 @@
+
+=== flights-20k ===
+shape: (20000, 5)
+            date  delay  distance origin destination
+2001/01/01 00:47     66      1750    DTW         LAS
+2001/01/01 01:10     95      2399    HNL         SFO
+2001/01/01 01:24     -5       407    LAS         OAK
+2001/01/01 01:39      4       256    LAS         PHX
+2001/01/01 06:02     -6       377    MHT         BWI
+
+dtypes:
+date             str
+delay          int64
+distance       int64
+origin           str
+destination      str
+
+profile:
+{
+  "dataset": "flights-20k",
+  "rows": 20000,
+  "columns": 5,
+  "exact_duplicate_rows": 0,
+  "missing_or_placeholder": {},
+  "unique_per_column": {
+    "date": 17729,
+    "delay": 289,
+    "distance": 1050,
+    "origin": 220,
+    "destination": 223
+  }
+}
+
+=== airports ===
+shape: (3376, 7)
+iata                 name             city state country  latitude   longitude
+ 00M              Thigpen      Bay Springs    MS     USA 31.953765  -89.234505
+ 00R Livingston Municipal       Livingston    TX     USA 30.685861  -95.017928
+ 00V          Meadow Lake Colorado Springs    CO     USA 38.945749 -104.569893
+ 01G         Perry-Warsaw            Perry    NY     USA 42.741347  -78.052081
+ 01J     Hilliard Airpark         Hilliard    FL     USA 30.688012  -81.905944
+
+dtypes:
+iata             str
+name             str
+city             str
+state            str
+country          str
+latitude     float64
+longitude    float64
+
+profile:
+{
+  "dataset": "airports",
+  "rows": 3376,
+  "columns": 7,
+  "exact_duplicate_rows": 0,
+  "missing_or_placeholder": {
+    "city": 12,
+    "state": 12
+  },
+  "unique_per_column": {
+    "iata": 3376,
+    "name": 3237,
+    "city": 2674,
+    "state": 56,
+    "country": 5,
+    "latitude": 3375,
+    "longitude": 3375
+  }
+}
+
+=== shipments_raw ===
+shape: (5210, 12)
+shipment_id order_date   ship_date delivery_date origin_city destination_city      carrier vehicle_type     status weight_kg distance_km freight_cost_inr
+  SHP102746 2024-08-17  2024-08-19    08/21/2024      Jaipur        Ahmedabad Ecom Express        Truck  Delivered      22.6       675.6          3769.25
+  SHP100877 29/12/2024  12/31/2024    2025-01-04        Pune          Jaipur          DTDC   Mini Truck  Delivered      92.9      1192.3          6155.77
+  SHP101215 2024-04-05 08-Apr-2024    11/04/2024      Mumbai        Hyderabad     BlueDart   Mini Truck    DELIVRD      83.3       776.8          4717.03
+  SHP102154 2024-05-07 08-May-2024    2024-05-11       Poona          Chennai     BlueDart           -  In Transit  153.0 lb      1143.0        Rs. 5,826
+  SHP103694 2024-11-16  2024-11-19    20/11/2024         BLR          Chennai    Delhivery   Mini Truck    Delayed   78.7 kg       362.7      INR 2473.81
+
+dtypes:
+shipment_id         str
+order_date          str
+ship_date           str
+delivery_date       str
+origin_city         str
+destination_city    str
+carrier             str
+vehicle_type        str
+status              str
+weight_kg           str
+distance_km         str
+freight_cost_inr    str
+
+profile:
+{
+  "dataset": "shipments_raw",
+  "rows": 5210,
+  "columns": 12,
+  "exact_duplicate_rows": 150,
+  "missing_or_placeholder": {
+    "delivery_date": 155,
+    "carrier": 52,
+    "vehicle_type": 104,
+    "weight_kg": 258,
+    "distance_km": 154,
+    "freight_cost_inr": 210
+  },
+  "unique_per_column": {
+    "shipment_id": 5000,
+    "order_date": 1146,
+    "ship_date": 1168,
+    "delivery_date": 1157,
+    "origin_city": 84,
+    "destination_city": 63,
+    "carrier": 45,
+    "vehicle_type": 18,
+    "status": 14,
+    "weight_kg": 2632,
+    "distance_km": 51,
+    "freight_cost_inr": 4782
+  }
+}

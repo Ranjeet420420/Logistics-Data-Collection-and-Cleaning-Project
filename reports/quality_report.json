@@ -1,0 +1,171 @@
+{
+  "manifest": {
+    "collected_at_utc": "2026-11-12T05:08:56.258988+00:00",
+    "files": [
+      {
+        "file": "flights-20k.json",
+        "url": "https://raw.githubusercontent.com/vega/vega-datasets/main/data/flights-20k.json",
+        "bytes": 1784867,
+        "sha256": "52f0ddd892d4569284b845e17323abc9afb7d303ec8f63251634a20327a610bb"
+      },
+      {
+        "file": "airports.csv",
+        "url": "https://raw.githubusercontent.com/vega/vega-datasets/main/data/airports.csv",
+        "bytes": 210363,
+        "sha256": "caeb10d97cf2946792f7f2b4e28b692c655bb6c5f0a8e048ea3625b538266dd3"
+      }
+    ]
+  },
+  "before": {
+    "flights": {
+      "dataset": "flights-20k",
+      "rows": 20000,
+      "columns": 5,
+      "exact_duplicate_rows": 0,
+      "missing_or_placeholder": {},
+      "unique_per_column": {
+        "date": 17729,
+        "delay": 289,
+        "distance": 1050,
+        "origin": 220,
+        "destination": 223
+      }
+    },
+    "airports": {
+      "dataset": "airports",
+      "rows": 3376,
+      "columns": 7,
+      "exact_duplicate_rows": 0,
+      "missing_or_placeholder": {
+        "city": 12,
+        "state": 12
+      },
+      "unique_per_column": {
+        "iata": 3376,
+        "name": 3237,
+        "city": 2674,
+        "state": 56,
+        "country": 5,
+        "latitude": 3375,
+        "longitude": 3375
+      }
+    },
+    "shipments_raw": {
+      "dataset": "shipments_raw",
+      "rows": 5210,
+      "columns": 12,
+      "exact_duplicate_rows": 150,
+      "missing_or_placeholder": {
+        "delivery_date": 155,
+        "carrier": 52,
+        "vehicle_type": 104,
+        "weight_kg": 258,
+        "distance_km": 154,
+        "freight_cost_inr": 210
+      },
+      "unique_per_column": {
+        "shipment_id": 5000,
+        "order_date": 1146,
+        "ship_date": 1168,
+        "delivery_date": 1157,
+        "origin_city": 84,
+        "destination_city": 63,
+        "carrier": 45,
+        "vehicle_type": 18,
+        "status": 14,
+        "weight_kg": 2632,
+        "distance_km": 51,
+        "freight_cost_inr": 4782
+      }
+    }
+  },
+  "after": {
+    "flights_clean": {
+      "dataset": "flights_clean",
+      "rows": 20000,
+      "columns": 16,
+      "exact_duplicate_rows": 0,
+      "missing_or_placeholder": {
+        "dest_state": 1
+      },
+      "unique_per_column": {
+        "date": 17729,
+        "delay": 289,
+        "distance": 1050,
+        "origin": 220,
+        "destination": 223,
+        "flag_unknown_airport": 1,
+        "flag_delay_outlier": 2,
+        "origin_state": 51,
+        "origin_latitude": 220,
+        "origin_longitude": 220,
+        "dest_state": 51,
+        "dest_latitude": 223,
+        "dest_longitude": 223,
+        "month": 3,
+        "hour": 24,
+        "is_delayed_15": 2
+      }
+    },
+    "shipments_clean": {
+      "dataset": "shipments_clean",
+      "rows": 5000,
+      "columns": 20,
+      "exact_duplicate_rows": 0,
+      "missing_or_placeholder": {
+        "ship_date": 5,
+        "delivery_date": 210,
+        "transit_days": 210
+      },
+      "unique_per_column": {
+        "shipment_id": 5000,
+        "order_date": 365,
+        "ship_date": 368,
+        "delivery_date": 370,
+        "origin_city": 10,
+        "destination_city": 10,
+        "carrier": 5,
+        "vehicle_type": 5,
+        "status": 4,
+        "weight_kg": 2082,
+        "distance_km": 45,
+        "freight_cost_inr": 4800,
+        "flag_date_order": 2,
+        "freight_cost_inr_outlier_flag": 2,
+        "weight_kg_outlier_flag": 2,
+        "route": 90,
+        "weight_kg_imputed": 2,
+        "freight_cost_inr_imputed": 2,
+        "transit_days": 8,
+        "cost_per_km": 468
+      }
+    }
+  },
+  "validation": {
+    "truth_rows": 5000,
+    "clean_rows": 5000,
+    "matched_ids": 5000,
+    "row_count_recovered": true,
+    "weight_kg_parsed_correct_pct": 99.94,
+    "freight_cost_inr_parsed_correct_pct": 100.0,
+    "distance_km_parsed_correct_pct": 100.0,
+    "carrier_correct_pct": 100.0,
+    "status_correct_pct": 100.0,
+    "origin_city_correct_pct": 100.0,
+    "destination_city_correct_pct": 100.0,
+    "order_date_correct_pct_of_non_null": 99.76,
+    "order_date_null_after_cleaning": 0,
+    "ship_date_correct_pct_of_non_null": 99.98,
+    "ship_date_null_after_cleaning": 5,
+    "delivery_date_correct_pct_of_non_null": 100.0,
+    "delivery_date_null_after_cleaning": 210,
+    "cost_outliers_recall": "20/20",
+    "cost_outliers_flagged_total": 20,
+    "cost_outliers_precision_pct": 100.0,
+    "weight_outliers_recall": "7/10",
+    "weight_outliers_flagged_total": 7,
+    "weight_outliers_precision_pct": 100.0,
+    "negative_weight_recall": "25/25",
+    "delivery_before_order_nulled": "60/60"
+  }
+}

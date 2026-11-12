@@ -1,0 +1,10 @@
+step,affected,detail
+standardize_columns,0,
+strip_whitespace,0,
+placeholders_to_NaN,0,
+parse_dates[date],20000,unparseable=0
+unknown_airport_codes,0,rows kept but flagged
+remove_exact_duplicates,0,
+non_positive_distance,0,
+flag_delay_outliers,740,"fence=[-71,76] min"
+enrich_airport_attributes,20000,

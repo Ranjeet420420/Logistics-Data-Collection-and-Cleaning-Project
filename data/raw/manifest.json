@@ -1,0 +1,17 @@
+{
+  "collected_at_utc": "2026-11-12T05:08:56.258988+00:00",
+  "files": [
+    {
+      "file": "flights-20k.json",
+      "url": "https://raw.githubusercontent.com/vega/vega-datasets/main/data/flights-20k.json",
+      "bytes": 1784867,
+      "sha256": "52f0ddd892d4569284b845e17323abc9afb7d303ec8f63251634a20327a610bb"
+    },
+    {
+      "file": "airports.csv",
+      "url": "https://raw.githubusercontent.com/vega/vega-datasets/main/data/airports.csv",
+      "bytes": 210363,
+      "sha256": "caeb10d97cf2946792f7f2b4e28b692c655bb6c5f0a8e048ea3625b538266dd3"
+    }
+  ]
+}

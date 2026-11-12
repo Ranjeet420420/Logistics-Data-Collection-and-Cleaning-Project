@@ -1,0 +1,79 @@
+STEP 1 - COLLECT
+[cache] flights-20k.json already present
+[cache] airports.csv already present
+[ok] wrote shipments_raw.csv: 5,210 rows (ground truth: 5,000)
+
+STEP 2 - LOAD & PROFILE
+
+STEP 3 - CLEAN: flights (real public data)
+  - standardize_columns                    affected=     0  
+  - strip_whitespace                       affected=     0  
+  - placeholders_to_NaN                    affected=     0  
+  - parse_dates[date]                      affected= 20000  unparseable=0
+  - unknown_airport_codes                  affected=     0  rows kept but flagged
+  - remove_exact_duplicates                affected=     0  
+  - non_positive_distance                  affected=     0  
+  - flag_delay_outliers                    affected=   740  fence=[-71,76] min
+  - enrich_airport_attributes              affected= 20000  
+
+STEP 4 - CLEAN: shipments (synthetic, injected defects)
+  - standardize_columns                    affected=     0  
+  - strip_whitespace                       affected=  1688  
+  - placeholders_to_NaN                    affected=   933  
+  - parse_dates[order_date]                affected=  5210  unparseable=0
+  - parse_dates[ship_date]                 affected=  5210  unparseable=0
+  - parse_dates[delivery_date]             affected=  5055  unparseable=0
+  - resolve_ambiguous_dates                affected=   578  rows_with_slash_dates=2863
+  - parse_weight[weight_kg]                affected=  4950  lb->kg converted=751
+  - parse_currency[freight_cost_inr]       affected=  5000  
+  - to_numeric[distance_km]                affected=  5056  
+  - normalize_categories[origin_city]      affected=    28  unique 38->10, fuzzy=92, unmapped=0
+  - normalize_categories[destination_city] affected=    23  unique 33->10, fuzzy=98, unmapped=0
+  - normalize_categories[carrier]          affected=    18  unique 22->4, fuzzy=425, unmapped=0
+  - normalize_categories[status]           affected=     9  unique 13->4, fuzzy=437, unmapped=0
+  - remove_duplicates                      affected=   210  exact_dupes_before_key_dedupe=210
+  - non_positive[weight_kg] -> NaN         affected=    24  
+  - non_positive[distance_km] -> NaN       affected=     0  
+  - non_positive[freight_cost_inr] -> NaN  affected=     0  
+  - ship_before_order -> NaT               affected=     5  
+  - delivery_before_ship -> NaT            affected=    60  
+  - outliers[freight_cost_inr] -> NaN      affected=    20  log-IQR k=3.0, upper~70,710
+  - outliers[weight_kg] -> NaN             affected=     7  log-IQR k=3.0, upper~2,537
+  - recompute_distance                     affected=   150  haversine x1.25 from city coordinates
+  - impute_median[weight_kg]               affected=   281  by ['vehicle_type']
+  - impute_median[freight_cost_inr]        affected=   220  by ['route']
+  - fill_unknown[carrier]                  affected=    50  
+  - fill_unknown[vehicle_type]             affected=   100  
+  - derived[transit_days,cost_per_km]      affected=  5000  
+
+STEP 5 - VALIDATE vs ground truth
+{
+  "truth_rows": 5000,
+  "clean_rows": 5000,
+  "matched_ids": 5000,
+  "row_count_recovered": true,
+  "weight_kg_parsed_correct_pct": 99.94,
+  "freight_cost_inr_parsed_correct_pct": 100.0,
+  "distance_km_parsed_correct_pct": 100.0,
+  "carrier_correct_pct": 100.0,
+  "status_correct_pct": 100.0,
+  "origin_city_correct_pct": 100.0,
+  "destination_city_correct_pct": 100.0,
+  "order_date_correct_pct_of_non_null": 99.76,
+  "order_date_null_after_cleaning": 0,
+  "ship_date_correct_pct_of_non_null": 99.98,
+  "ship_date_null_after_cleaning": 5,
+  "delivery_date_correct_pct_of_non_null": 100.0,
+  "delivery_date_null_after_cleaning": 210,
+  "cost_outliers_recall": "20/20",
+  "cost_outliers_flagged_total": 20,
+  "cost_outliers_precision_pct": 100.0,
+  "weight_outliers_recall": "7/10",
+  "weight_outliers_flagged_total": 7,
+  "weight_outliers_precision_pct": 100.0,
+  "negative_weight_recall": "25/25",
+  "delivery_before_order_nulled": "60/60"
+}
+
+STEP 6 - SAVE
+done.
